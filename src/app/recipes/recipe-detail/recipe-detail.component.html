@@ -38,7 +38,12 @@
           routerLinkActive="router-link-active"
           >Edit Recipe</a
         >
-        <a class="dropdown-item" style="cursor: pointer;">Delete Recipe</a>
+        <a
+          class="dropdown-item"
+          (click)="onDeleteRecipe()"
+          style="cursor: pointer;"
+          >Delete Recipe</a
+        >
       </div>
     </div>
   </div>
