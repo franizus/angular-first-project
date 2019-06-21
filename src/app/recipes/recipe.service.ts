@@ -9,7 +9,7 @@ import { Subject } from 'rxjs';
 export class RecipeService {
   recipesChanged = new Subject<Recipe[]>();
   idCount = 3;
-  private recipes: Recipe[] = [
+  /* private recipes: Recipe[] = [
     new Recipe(
       1,
       'A test recipe',
@@ -24,9 +24,15 @@ export class RecipeService {
       'https://ichef.bbci.co.uk/food/ic/food_16x9_832/recipes/nachos_92445_16x9.jpg',
       [new Ingredient('Buns', 2), new Ingredient('Meat', 1)]
     )
-  ];
+  ]; */
+  private recipes: Recipe[] = [];
 
   constructor(private slService: ShoppingListService) {}
+
+  setRecipes(recipes: Recipe[]) {
+    this.recipes = recipes;
+    this.emitRecipes();
+  }
 
   getRecipes() {
     return this.recipes.slice();
@@ -34,7 +40,7 @@ export class RecipeService {
 
   getRecipe(id: number) {
     return this.recipes.find((recipe: Recipe) => {
-      return recipe.id == id;
+      return recipe.id === id;
     });
   }
 
@@ -46,28 +52,28 @@ export class RecipeService {
     recipe.id = this.idCount;
     this.idCount++;
     this.recipes.push(recipe);
-    this.emitRecipess();
+    this.emitRecipes();
   }
 
   updateRecipe(id: number, newRecipe: Recipe) {
     const index = this.getRecipeIndex(id);
     this.recipes[index] = newRecipe;
-    this.emitRecipess();
+    this.emitRecipes();
   }
 
   getRecipeIndex(id: number) {
     return this.recipes.findIndex((recipe: Recipe) => {
-      return recipe.id == id;
+      return recipe.id === id;
     });
   }
 
   deleteRecipe(id: number) {
     const index = this.getRecipeIndex(id);
     this.recipes.splice(index, 1);
-    this.emitRecipess();
+    this.emitRecipes();
   }
 
-  emitRecipess() {
+  emitRecipes() {
     this.recipesChanged.next(this.recipes.slice());
   }
 }
